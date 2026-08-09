@@ -207,6 +207,9 @@
   <h2 class="titulo-seccion">Armá la playlist</h2>
   <p class="subtitulo-seccion">Sugerinos la canción que no puede faltar en la fiesta</p>
   <div class="musica-box">
+    <div style="text-align:center;margin-bottom:1.8rem;">
+      <a class="boton-spotify" href="https://open.spotify.com/playlist/4L9AttIFf6Gc96sPpuuFkD?si=ONmVCMIZQSy5cTQ4DoHT4w" target="_blank" rel="noopener">🎵 Escuchá la playlist "Boda TyG" ↗</a>
+    </div>
     <form id="form-musica">
       <div class="fila">
         <div class="campo">
@@ -261,25 +264,9 @@
           <label><input type="radio" name="asiste" value="no"><span>No voy a poder ir</span></label>
         </div>
       </div>
-      <div class="fila">
-        <div class="campo">
-          <label for="acompanantes">Acompañantes (incluyéndote)</label>
-          <input type="text" id="acompanantes" placeholder="Ej: 2">
-        </div>
-        <div class="campo">
-          <label for="menu">Preferencia de menú</label>
-          <select id="menu">
-            <option value="sin-restricciones">Sin restricciones</option>
-            <option value="vegetariano">Vegetariano</option>
-            <option value="vegano">Vegano</option>
-            <option value="celiaco">Celíaco / sin gluten</option>
-            <option value="otra">Otra alergia o restricción</option>
-          </select>
-        </div>
-      </div>
-      <div class="campo">
-        <label for="mensaje">Contanos si tenés una alergia específica o dejanos un mensaje</label>
-        <textarea id="mensaje" placeholder="Opcional"></textarea>
+    <div class="campo">
+        <label for="acompanantes">Acompañantes (incluyéndote)</label>
+        <input type="text" id="acompanantes" placeholder="Ej: 2">
       </div>
       <button type="submit" class="boton" id="btn-enviar">Confirmar asistencia</button>
       <p class="estado" id="estado-rsvp"></p>
