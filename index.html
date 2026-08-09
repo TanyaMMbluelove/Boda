@@ -355,12 +355,9 @@
     if(!nombre){ estado.textContent = 'Por favor ingresá tu nombre.'; return; }
     var asiste = document.querySelector('input[name="asiste"]:checked').value;
     var acompanantes = document.getElementById('acompanantes').value.trim();
-    var menu = document.getElementById('menu').value;
-    var mensaje = document.getElementById('mensaje').value.trim();
     btnEnviar.disabled = true;
     estado.textContent = 'Enviando...';
-    var entrada = {nombre:nombre, asiste:asiste, acompanantes:acompanantes, menu:menu, mensaje:mensaje, fecha:new Date().toISOString()};
-    var key = 'rsvp:' + nombre.toLowerCase().replace(/[^a-z0-9]+/g,'-') + '-' + Date.now();
+    var entrada = {nombre:nombre, asiste:asiste, acompanantes:acompanantes, fecha:new Date().toISOString()};    var key = 'rsvp:' + nombre.toLowerCase().replace(/[^a-z0-9]+/g,'-') + '-' + Date.now();
     try{
       var res = await window.storage.set(key, JSON.stringify(entrada), true);
       if(!res){ throw new Error('sin resultado'); }
