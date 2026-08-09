@@ -347,24 +347,30 @@
   }
   actualizarContadorRsvp();
 
-  var formRsvp = document.getElementById('form-rsvp');
+ var formRsvp = document.getElementById('form-rsvp');
   var btnEnviar = document.getElementById('btn-enviar');
   formRsvp.addEventListener('submit', async function(ev){
     ev.preventDefault();
     var estado = document.getElementById('estado-rsvp');
     var nombre = document.getElementById('nombre').value.trim();
     if(!nombre){ estado.textContent = 'Por favor ingresá tu nombre.'; return; }
-    var asiste = document.querySelector('input[name="asiste"]:checked').value;
+    var asisteValor = document.querySelector('input[name="asiste"]:checked').value;
+    var asisteTexto = asisteValor === 'si' ? 'Si' : 'No';
     var acompanantes = document.getElementById('acompanantes').value.trim();
     btnEnviar.disabled = true;
     estado.textContent = 'Enviando...';
-    var entrada = {nombre:nombre, asiste:asiste, acompanantes:acompanantes, fecha:new Date().toISOString()};    var key = 'rsvp:' + nombre.toLowerCase().replace(/[^a-z0-9]+/g,'-') + '-' + Date.now();
+    var datosForm = new FormData();
+    datosForm.append('entry.951311629', nombre);
+    datosForm.append('entry.1936900752', asisteTexto);
+    datosForm.append('entry.1943182543', acompanantes);
     try{
-      var res = await window.storage.set(key, JSON.stringify(entrada), true);
-      if(!res){ throw new Error('sin resultado'); }
+      await fetch('https://docs.google.com/forms/d/e/1FAIpQLSfQSy_24F3Zd70x6D4b87ly6TUs8bBR02JYiI6bKxtXVXo6uA/formResponse', {
+        method: 'POST',
+        mode: 'no-cors',
+        body: datosForm
+      });
       formRsvp.style.display = 'none';
       document.getElementById('gracias').classList.add('activo');
-      actualizarContadorRsvp();
     }catch(e){
       estado.textContent = 'Hubo un problema al enviar. Probá de nuevo.';
       btnEnviar.disabled = false;
