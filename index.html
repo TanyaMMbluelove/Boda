@@ -276,8 +276,7 @@
       <p class="voice">¡Gracias por confirmar!</p>
       <p style="font-size:.85rem;color:#7a7a7a;">Te esperamos con muchas ganas.</p>
     </div>
-    <p class="contador-confirmados" id="contador-rsvp">Cargando confirmaciones...</p>
-  </div>
+   
 </section>
 
 <footer>Con amor, Tanya &amp; Gerardo</footer>
@@ -336,16 +335,6 @@
       estado.textContent = 'No se pudo guardar, probá de nuevo.';
     }
   });
-
-  async function actualizarContadorRsvp(){
-    var el = document.getElementById('contador-rsvp');
-    try{
-      var res = await window.storage.list('rsvp:', true);
-      var total = (res && res.keys) ? res.keys.length : 0;
-      el.textContent = total > 0 ? total + ' persona' + (total===1?'':'s') + ' ya confirmaron' : 'Sé el primero en confirmar';
-    }catch(e){ el.textContent = ''; }
-  }
-  actualizarContadorRsvp();
 
  var formRsvp = document.getElementById('form-rsvp');
   var btnEnviar = document.getElementById('btn-enviar');
