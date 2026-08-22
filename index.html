@@ -321,9 +321,9 @@
     }
   });
 
- var formRsvp = document.getElementById('form-rsvp');
+  var formRsvp = document.getElementById('form-rsvp');
   var btnEnviar = document.getElementById('btn-enviar');
-  formRsvp.addEventListener('submit', async function(ev){
+  formRsvp.addEventListener('submit', function(ev){
     ev.preventDefault();
     var estado = document.getElementById('estado-rsvp');
     var nombre = document.getElementById('nombre').value.trim();
@@ -333,25 +333,34 @@
     var acompanantes = document.getElementById('acompanantes').value.trim();
     btnEnviar.disabled = true;
     estado.textContent = 'Enviando...';
-    var datosForm = new FormData();
-    datosForm.append('entry.951311629', nombre);
-    datosForm.append('entry.1936900752', asisteTexto);
-    datosForm.append('entry.1943182543', acompanantes);
-    try{
-      await fetch('https://docs.google.com/forms/d/e/1FAIpQLSfQSy_24F3Zd70x6D4b87ly6TUs8bBR02JYiI6bKxtXVXo6uA/formResponse', {
-        method: 'POST',
-        mode: 'no-cors',
-        body: datosForm
-      });
+
+    var googleForm = document.createElement('form');
+    googleForm.action = 'https://docs.google.com/forms/d/e/1FAIpQLSfQSy_24F3Zd70x6D4b87ly6TUs8bBR02JYiI6bKxtXVXo6uA/formResponse';
+    googleForm.method = 'POST';
+    googleForm.target = 'hidden_iframe';
+
+    function agregarCampo(nombreCampo, valor){
+      var input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = nombreCampo;
+      input.value = valor;
+      googleForm.appendChild(input);
+    }
+    agregarCampo('entry.951311629', nombre);
+    agregarCampo('entry.1936900752', asisteTexto);
+    agregarCampo('entry.1943182543', acompanantes);
+
+    document.body.appendChild(googleForm);
+    googleForm.submit();
+    document.body.removeChild(googleForm);
+
+    setTimeout(function(){
       formRsvp.style.display = 'none';
       document.getElementById('gracias').classList.add('activo');
-    }catch(e){
-      estado.textContent = 'Hubo un problema al enviar. Probá de nuevo.';
-      btnEnviar.disabled = false;
-    }
+    }, 800);
   });
 })();
 </script>
-
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 </body>
 </html>
