@@ -291,36 +291,7 @@
       setTimeout(function(){ btn.textContent = 'Copiar CLABE'; }, 1800);
     });
   });
-
-  async function actualizarContadorMusica(){
-    var el = document.getElementById('contador-musica');
-    try{
-      var res = await window.storage.list('cancion:', true);
-      var total = (res && res.keys) ? res.keys.length : 0;
-      el.textContent = total > 0 ? total + ' canciones sugeridas hasta ahora' : 'Sé el primero en sugerir una canción';
-    }catch(e){ el.textContent = ''; }
-  }
-  actualizarContadorMusica();
-
-  var formMusica = document.getElementById('form-musica');
-  formMusica.addEventListener('submit', async function(ev){
-    ev.preventDefault();
-    var cancion = document.getElementById('cancion').value.trim();
-    var artista = document.getElementById('artista').value.trim();
-    var estado = document.getElementById('estado-musica');
-    if(!cancion || !artista){ estado.textContent = 'Completá canción y artista.'; return; }
-    document.getElementById('link-spotify').href = 'https://open.spotify.com/search/' + encodeURIComponent(cancion + ' ' + artista);
-    var key = 'cancion:' + Date.now();
-    try{
-      await window.storage.set(key, JSON.stringify({cancion:cancion, artista:artista, fecha:new Date().toISOString()}), true);
-      estado.textContent = '¡Gracias por la sugerencia!';
-      formMusica.reset();
-      actualizarContadorMusica();
-    }catch(e){
-      estado.textContent = 'No se pudo guardar, probá de nuevo.';
-    }
-  });
-
+  
   var formRsvp = document.getElementById('form-rsvp');
   var btnEnviar = document.getElementById('btn-enviar');
   formRsvp.addEventListener('submit', function(ev){
